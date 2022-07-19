@@ -1,11 +1,19 @@
 ﻿using System.Diagnostics;
+using static TypingGame.StartGame;
+
 // See https://aka.ms/new-console-template for more information
 
 
-
-string prompt = "This is the prompt you will be typing!";
-
+string prompt = "This is the prompt you will be typing and I hope it is a good time for you to work on your typing. I hope this works to calculate the correct WPM!";
 int wordCount = prompt.Split(' ').Length;
+
+string logTime;
+string logWPM;
+int calculatedWPM;
+
+
+GameStart();
+
 
 
 Console.WriteLine("Hello, welcome to this typing game!");
@@ -17,11 +25,11 @@ Console.WriteLine("Ready? (Y/N)");
 string? startString = Console.ReadLine();
 
 
+
 Stopwatch stopwatch = new Stopwatch();
 
 
-
-if (startString == "y" || startString == "Y")
+if (startString == "y" || startString == "Y")           // If user starts game...
 {
 
     stopwatch.Start();
@@ -36,10 +44,15 @@ if (startString == "y" || startString == "Y")
         stopwatch.Stop();
         Console.WriteLine("It took you {0:00}:{1:00}:{2:00}.{3}", timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds);
 
+        logTime = timeSpan.ToString();
+        calculatedWPM = CalculateWPM(prompt, wordCount, timeSpan);
+        logWPM = CalculateWPM(prompt, wordCount, timeSpan).ToString();
+
         Console.WriteLine("Calculated WPM:" + CalculateWPM(prompt, wordCount, timeSpan));
 
+
     }
-    else
+    else                                                // 
     {
         Console.WriteLine("WRONG!");
     }
@@ -71,7 +84,7 @@ int GetTimeElapsedInSeconds()
 
     double wordsPerMinute = wordCount / timeElapsed;
 
-    int wpmRounded = (int)Math.Round(wordsPerMinute);
+    int wpmRounded = (int)Math.Round(wordsPerMinute, 0);
 
 
     return wpmRounded;
