@@ -1,30 +1,34 @@
 ﻿using System.Diagnostics;
-using static TypingGame.StartGame;
+using System.Text;
+using System.Linq;
 
 // See https://aka.ms/new-console-template for more information
 
+string sentence = "";
+Random random = new Random(); 
 
-string prompt = "This is the prompt you will be typing and I hope it is a good time for you to work on your typing. I hope this works to calculate the correct WPM!";
-int wordCount = prompt.Split(' ').Length;
+
+
+int wordCount = wordsFromText.Length;
+
+
+    
 
 string logTime;
 string logWPM;
 int calculatedWPM;
 
 
-GameStart();
-
-
 
 Console.WriteLine("Hello, welcome to this typing game!");
 Console.WriteLine("You will be typing the below sentence:");
 Console.WriteLine("--------");
-Console.WriteLine(prompt);
+Console.WriteLine(sentence);
 Console.WriteLine("--------");
 Console.WriteLine("Ready? (Y/N)");
 string? startString = Console.ReadLine();
 
-
+sentence = string.Join(" ", wordsFromText);
 
 Stopwatch stopwatch = new Stopwatch();
 
@@ -37,7 +41,7 @@ if (startString == "y" || startString == "Y")           // If user starts game..
     string? input = Console.ReadLine();
 
 
-    if (input == prompt)
+    if (input == sentence)
     {
         Console.WriteLine("Success!");
         TimeSpan timeSpan = stopwatch.Elapsed;
@@ -45,10 +49,10 @@ if (startString == "y" || startString == "Y")           // If user starts game..
         Console.WriteLine("It took you {0:00}:{1:00}:{2:00}.{3}", timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds);
 
         logTime = timeSpan.ToString();
-        calculatedWPM = CalculateWPM(prompt, wordCount, timeSpan);
-        logWPM = CalculateWPM(prompt, wordCount, timeSpan).ToString();
+        calculatedWPM = CalculateWPM(sentence, wordCount, timeSpan);
+        logWPM = CalculateWPM(sentence, wordCount, timeSpan).ToString();
 
-        Console.WriteLine("Calculated WPM:" + CalculateWPM(prompt, wordCount, timeSpan));
+        Console.WriteLine("Calculated WPM:" + CalculateWPM(sentence, wordCount, timeSpan));
 
 
     }
