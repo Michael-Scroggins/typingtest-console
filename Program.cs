@@ -1,97 +1,75 @@
 ﻿using System.Diagnostics;
 using System.Text;
 using System.Linq;
+using TypingGame;
 
-// See https://aka.ms/new-console-template for more information
+string[] words = { "Blue", "Car", "Test", "Together" };
+var stopWatch = new Stopwatch();
+Random random = new Random();
 
-string sentence = "";
-Random random = new Random(); 
-
-
-
-int wordCount = wordsFromText.Length;
+Stats stats = new Stats();
 
 
-    
+Console.WriteLine("Do you want to start the test? (Y/N)");
 
-string logTime;
-string logWPM;
-int calculatedWPM;
+string? input = Console.ReadLine();
+string? gameDecision = input.ToUpper();
 
 
 
-Console.WriteLine("Hello, welcome to this typing game!");
-Console.WriteLine("You will be typing the below sentence:");
-Console.WriteLine("--------");
-Console.WriteLine(sentence);
-Console.WriteLine("--------");
-Console.WriteLine("Ready? (Y/N)");
-string? startString = Console.ReadLine();
 
-sentence = string.Join(" ", wordsFromText);
-
-Stopwatch stopwatch = new Stopwatch();
+string word;
 
 
-if (startString == "y" || startString == "Y")           // If user starts game...
+while (gameDecision != "N")
+
 {
+    stats.Correct = 0;
+    stats.Missed = 0;
 
-    stopwatch.Start();
+    int numberOfWordsToType = 0;
 
-    string? input = Console.ReadLine();
+    double elapsedTime = 0;
+    double wordsPerMinute = 0;
 
+    Console.WriteLine("How many words do you want to type?");
+    numberOfWordsToType = Convert.ToInt32(Console.ReadLine());
 
-    if (input == sentence)
+    Console.WriteLine("Press enter to start!");
+    Console.ReadLine();
+
+    stopWatch.Start();
+
+    for (int i =0; i < numberOfWordsToType; i++)
     {
-        Console.WriteLine("Success!");
-        TimeSpan timeSpan = stopwatch.Elapsed;
-        stopwatch.Stop();
-        Console.WriteLine("It took you {0:00}:{1:00}:{2:00}.{3}", timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds);
+        word = words[random.Next(words.Length)];
+        Console.WriteLine(word);
+        if (Console.ReadLine() == word)
+        {
+            stats.Correct++;
+        }
 
-        logTime = timeSpan.ToString();
-        calculatedWPM = CalculateWPM(sentence, wordCount, timeSpan);
-        logWPM = CalculateWPM(sentence, wordCount, timeSpan).ToString();
+        else
+        {
+            stats.Missed++;
+        }
 
-        Console.WriteLine("Calculated WPM:" + CalculateWPM(sentence, wordCount, timeSpan));
-
-
-    }
-    else                                                // 
-    {
-        Console.WriteLine("WRONG!");
+        Console.WriteLine("------------------------------------------------");
     }
 
-}
-
-else
-{
-    Console.WriteLine("That is not a Y!");
-}
-
-
-
-int GetTimeElapsedInSeconds()
-{
-    return (int)stopwatch.Elapsed.TotalSeconds;
-}
-
- float GetTimeElapsedInMinutes()
-{
-    return GetTimeElapsedInSeconds() / 60f;
-}
+    stopWatch.Stop();
+    elapsedTime = stopWatch.Elapsed.TotalMinutes;
+    wordsPerMinute = numberOfWordsToType / elapsedTime;
+    Console.Clear();
+    Console.WriteLine("------------------------------------------------");
+    Console.WriteLine("Stats");
+    Console.WriteLine("------------------------------------------------");
+    Console.WriteLine("Correct Words: {0}", stats.Correct);
+    Console.WriteLine("Missed Words: {0}", stats.Missed);
+    Console.WriteLine("Elapsed Time: {0}", elapsedTime.ToString());
+    Console.WriteLine("Calculated WPM: {0}", wordsPerMinute.ToString());
 
 
- int CalculateWPM(string wordPrompt, int wordCount, TimeSpan time )
-{
-
-    double timeElapsed = (double)GetTimeElapsedInMinutes();
-
-    double wordsPerMinute = wordCount / timeElapsed;
-
-    int wpmRounded = (int)Math.Round(wordsPerMinute, 0);
-
-
-    return wpmRounded;
 
 
 }
