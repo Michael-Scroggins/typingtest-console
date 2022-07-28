@@ -12,6 +12,7 @@ Stats stats = new Stats();
 
 Console.WriteLine("Do you want to start the test? (Y/N)");
 
+string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 string? input = Console.ReadLine();
 string? gameDecision = input.ToUpper();
 
@@ -70,6 +71,19 @@ while (gameDecision != "N")
     Console.WriteLine("Calculated WPM: {0}", wordsPerMinute.ToString());
 
 
+    using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Log.txt"), true)) 
+    {
+        outputFile.WriteLine(DateTime.Now.ToString());
+        outputFile.WriteLine("===============");
+        outputFile.WriteLine("Correct Words: {0}", stats.Correct);
+        outputFile.WriteLine("Missed Words: {0}", stats.Missed);
+        outputFile.WriteLine("Elapsed Time: {0}", elapsedTime.ToString());
+        outputFile.WriteLine("Calculated WPM: {0}", wordsPerMinute.ToString());
+        outputFile.WriteLine("===============");
+        outputFile.WriteLine("");
 
+
+    }
 
 }
+
