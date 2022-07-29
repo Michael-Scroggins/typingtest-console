@@ -16,7 +16,7 @@ Easiest way to run is debug from the .sln file as of turn in date. This method h
 
 This program lets the user choose how many words they would like to include in the typing test and calculates stats based on their results. First, it will check " C:\Users\Public " for a
 words.txt file. If no words.txt file is found in this location, it will default to the hard coded words "Dog", "Cat", and "Horse". If a words.txt file is found, the program determines how many
-words there are (each line is a "word"), and uses these words in the typing test. If running through the test for the first time, a "Log.txt" file will be created and will log stats from the users
+words there are (each line is a "word"), and uses these words in the typing test. If running through the test for the first time, a "Log.txt" file will be created in Documents and will log stats from the users
 performance. If the file already exists, the stats will be appended. 
 
 The three required functions are CalculateWPM, CalculatePercentage and EndGameMessage.
