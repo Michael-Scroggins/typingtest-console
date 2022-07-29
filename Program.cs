@@ -14,7 +14,7 @@ List<string> wordsList = new List<string>();
 if (File.Exists(path))
 {
 
-    string[] lines = File.ReadAllLines(path);
+    string[] lines = File.ReadAllLines(path);   // #2 Read data from a text file
 
     foreach (string line in lines)
     {
@@ -26,6 +26,7 @@ if (File.Exists(path))
     words = wordsList.ToArray();
 }
 
+// If no words.txt file is found in C:\Users\Public
 else {
 
     words = new string[3];
@@ -52,7 +53,6 @@ string? gameDecision = input.ToUpper();
 
 
 
-
 string word;
 
 
@@ -61,7 +61,7 @@ while (gameDecision != "N") // #1 Master Loop
 {
     stats.Correct = 0;
     stats.Missed = 0;
-
+    double percentage = 0;
     int numberOfWordsToType = 0;
 
     double elapsedTime = 0;
@@ -97,7 +97,9 @@ while (gameDecision != "N") // #1 Master Loop
 
     stopWatch.Stop();
     elapsedTime = stopWatch.Elapsed.TotalMinutes;
-    wordsPerMinute = numberOfWordsToType / elapsedTime;
+   // wordsPerMinute = numberOfWordsToType / elapsedTime;
+
+    wordsPerMinute = CalculateWPM(elapsedTime, wordsPerMinute); //Returns value to be displayed in stats
     Console.Clear();
     Console.WriteLine("------------------------------------------------");
     Console.WriteLine("Stats");
@@ -108,6 +110,11 @@ while (gameDecision != "N") // #1 Master Loop
     Console.WriteLine("Calculated WPM: {0}", wordsPerMinute.ToString());
 
 
+    percentage = CalculatePercentage(stats.Correct, numberOfWordsToType);
+    Console.WriteLine("Percentage {0}", percentage.ToString("P2"));
+
+
+
     using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Log.txt"), true)) 
     {
         outputFile.WriteLine(DateTime.Now.ToString());
@@ -116,11 +123,34 @@ while (gameDecision != "N") // #1 Master Loop
         outputFile.WriteLine("Missed Words: {0}", stats.Missed);
         outputFile.WriteLine("Elapsed Time: {0}", elapsedTime.ToString());
         outputFile.WriteLine("Calculated WPM: {0}", wordsPerMinute.ToString());
+        outputFile.WriteLine("Percentage Correct: {0}", percentage.ToString("P2"));
         outputFile.WriteLine("===============");
         outputFile.WriteLine("");
 
 
+
     }
 
+    double CalculateWPM(double elapsed, double wordsNumber)
+{
+        double WPM = wordsNumber / elapsed;
+
+        return WPM;
 }
+
+
+    double CalculatePercentage(int correct, int total)
+    {
+        double percentageRight = (double)correct / (double)total;
+
+        return percentageRight;
+    }
+    
+
+
+
+
+}
+
+
 
