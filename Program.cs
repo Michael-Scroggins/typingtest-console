@@ -3,7 +3,41 @@ using System.Text;
 using System.Linq;
 using TypingGame;
 
-string[] words = { "Blue", "Car", "Test", "Together" };
+
+string[] words;
+
+string path = @"C:\Users\Public\words.txt";
+
+List<string> wordsList = new List<string>();
+
+
+if (File.Exists(path))
+{
+
+    string[] lines = File.ReadAllLines(path);
+
+    foreach (string line in lines)
+    {
+        wordsList.Add(line);
+ 
+    }
+
+
+    words = wordsList.ToArray();
+}
+
+else {
+
+    words = new string[3];
+
+    words[0] = "Dog";
+    words[1] = "Cat";
+    words[2] = "Horse";
+
+}
+
+
+
 var stopWatch = new Stopwatch();
 Random random = new Random();
 
@@ -22,7 +56,7 @@ string? gameDecision = input.ToUpper();
 string word;
 
 
-while (gameDecision != "N")
+while (gameDecision != "N") // #1 Master Loop
 
 {
     stats.Correct = 0;
@@ -41,21 +75,24 @@ while (gameDecision != "N")
 
     stopWatch.Start();
 
-    for (int i =0; i < numberOfWordsToType; i++)
-    {
-        word = words[random.Next(words.Length)];
-        Console.WriteLine(word);
-        if (Console.ReadLine() == word)
-        {
-            stats.Correct++;
-        }
 
-        else
-        {
-            stats.Missed++;
-        }
 
-        Console.WriteLine("------------------------------------------------");
+        for (int i = 0; i < numberOfWordsToType; i++)
+        {
+            word = words[random.Next(words.Length)];
+            Console.WriteLine(word);
+            if (Console.ReadLine() == word)
+            {
+                stats.Correct++;
+            }
+
+            else
+            {
+                stats.Missed++;
+            }
+
+
+            Console.WriteLine("------------------------------------------------");
     }
 
     stopWatch.Stop();
