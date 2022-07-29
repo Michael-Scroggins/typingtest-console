@@ -4,31 +4,36 @@ using System.Linq;
 using TypingGame;
 
 
+
 string[] words;
 
 string path = @"C:\Users\Public\words.txt";
 
 List<string> wordsList = new List<string>();
 
+int wordsInFileCount = 0;
 
 if (File.Exists(path))
 {
 
-    string[] lines = File.ReadAllLines(path);   // #2 Read data from a text file
+    string[] lines = File.ReadAllLines(path);   
 
     foreach (string line in lines)
     {
         wordsList.Add(line);
+        wordsInFileCount++;
+
  
     }
 
 
     words = wordsList.ToArray();
+    Console.WriteLine("words.txt found and there are {0} words in it!", wordsInFileCount);
 }
 
 // If no words.txt file is found in C:\Users\Public
 else {
-
+    Console.WriteLine("Words.txt was not found! Using default words.");
     words = new string[3];
 
     words[0] = "Dog";
@@ -99,7 +104,7 @@ while (gameDecision != "N") // #1 Master Loop
     elapsedTime = stopWatch.Elapsed.TotalMinutes;
    // wordsPerMinute = numberOfWordsToType / elapsedTime;
 
-    wordsPerMinute = CalculateWPM(elapsedTime, wordsPerMinute); //Returns value to be displayed in stats
+    wordsPerMinute = CalculateWPM(elapsedTime, numberOfWordsToType); //Returns value to be displayed in stats
     Console.Clear();
     Console.WriteLine("------------------------------------------------");
     Console.WriteLine("Stats");
@@ -112,6 +117,9 @@ while (gameDecision != "N") // #1 Master Loop
 
     percentage = CalculatePercentage(stats.Correct, numberOfWordsToType);
     Console.WriteLine("Percentage {0}", percentage.ToString("P2"));
+
+    Console.WriteLine("Play again? (Y/N)");
+    gameDecision = Console.ReadLine();
 
 
 
@@ -131,7 +139,7 @@ while (gameDecision != "N") // #1 Master Loop
 
     }
 
-    double CalculateWPM(double elapsed, double wordsNumber)
+    double CalculateWPM(double elapsed, double wordsNumber)         // Function 1
 {
         double WPM = wordsNumber / elapsed;
 
@@ -139,18 +147,24 @@ while (gameDecision != "N") // #1 Master Loop
 }
 
 
-    double CalculatePercentage(int correct, int total)
+    double CalculatePercentage(int correct, int total)          // Function 2
     {
         double percentageRight = (double)correct / (double)total;
 
         return percentageRight;
     }
-    
+
+    static void EndGameMessage()                    // Function 3
+    {
+        Console.WriteLine("Test End!");
+    }
 
 
+    EndGameMessage();
 
 
 }
+
 
 
 
