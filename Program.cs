@@ -50,7 +50,7 @@ Random random = new Random();
 Stats stats = new Stats();
 
 
-Console.WriteLine("Do you want to start the test? (Y/N)");
+Console.WriteLine("Do you want to start the test? Enter any text to proceed or enter N to exit:");
 
 string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 string? input = Console.ReadLine();
