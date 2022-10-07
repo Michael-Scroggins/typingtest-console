@@ -11,7 +11,6 @@ Project Requirements Fulfilled
 
 
 Targets .NET 6.0
-Designed for Windows OS use
 Easiest way to run is debug from the .sln file as of turn in date. This method has been tested on another machine running Windows 10 19044.1826
 
 This program lets the user choose how many words they would like to include in the typing test and calculates stats based on their results. First, it will check " C:\Users\Public " for a
